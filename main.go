@@ -10,6 +10,8 @@ import (
 	"syscall"
 
 	"github.com/Babur171/carZone-golang/config"
+	"github.com/Babur171/carZone-golang/handler/student"
+	"github.com/Babur171/carZone-golang/store"
 )
 
 func main() {
@@ -17,9 +19,13 @@ func main() {
 	config.LoadConfig()
 	fmt.Println("server is runinggg", config.AppConfig.BaseURL)
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("its workingggggggg"))
-	})
+	storage, err := store.New(config.AppConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	http.HandleFunc("POST /api/v1/student", student.New(storage))
+
 	addr := ":" + config.AppConfig.Port
 	done := make(chan os.Signal, 1)
 

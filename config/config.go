@@ -29,7 +29,7 @@ func LoadConfig() {
 	AppConfig = &Config{
 		Port:    getEnv("PORT", "8080"),
 		BaseURL: getEnv("BASE_URL", "http://localhost:8080"),
-		DBURL:   getEnv("DATABASE_URL", "postgres://user:pass@localhost:5432/db"),
+		DBURL:   getEnv("DATABASE_URL", "/store/storage.db"),
 	}
 }
 
